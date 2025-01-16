@@ -2,21 +2,34 @@ import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import {
   ArcRotateCamera,
+  BackgroundMaterial,
+  Camera,
   Engine,
   HemisphericLight,
+  Layer,
   MeshBuilder,
   Scene,
+  StandardMaterial,
+  Texture,
+  UniversalCamera,
   Vector3,
 } from "@babylonjs/core";
+
+import BG_URL from "/BG.png";
+import SPACESHIP_URL from "/spaceship.png"
 
 const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
 const engine = new Engine(canvas, true);
 const scene = new Scene(engine);
-const camera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
+
+const layer = new Layer("Background", BG_URL, scene);
+
+const camera = new UniversalCamera("Camera", new Vector3(0, 0, -5), scene);
 camera.attachControl(canvas, true);
 
-const light = new HemisphericLight("light", new Vector3(1, 1, 0), scene);
-const sphere = MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+new HemisphericLight("lightUp", new Vector3(0, 1, 0), scene);
+new HemisphericLight("lightDown", new Vector3(0, 0, 0), scene);
+const spaceship = MeshBuilder.CreateBox("spaceship", { width: 0.5, height: 0.5 });
 
 window.addEventListener("keydown", (ev) => {
   // ctrl-d
