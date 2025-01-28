@@ -1,4 +1,4 @@
-import "./style.css"
+import "./style.css";
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import {
@@ -15,9 +15,11 @@ const engine = new Engine(canvas, true);
 const scene = new Scene(engine);
 const rotation = Math.PI / 2;
 
-new ArcRotateCamera("camera", rotation, rotation, 2, Vector3.Zero(), scene);
+const camera = new ArcRotateCamera("camera", rotation, rotation, 2, Vector3.Zero(), scene);
+camera.attachControl(canvas, true);
+
 new HemisphericLight("light", new Vector3(1, 1, 0), scene);
-MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+MeshBuilder.CreateSphere("sphere", { diameter: 0.5 }, scene);
 
 window.addEventListener("keydown", (event) => {
   if (!event.shiftKey) return;
@@ -29,7 +31,5 @@ window.addEventListener("keydown", (event) => {
   scene.debugLayer.show();
 });
 
-engine.runRenderLoop(() => {
-  scene.render();
-  engine.resize();
-});
+window.addEventListener("resize", () => engine.resize());
+engine.runRenderLoop(() => scene.render());
