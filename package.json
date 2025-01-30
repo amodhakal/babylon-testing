@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "setup": "pnpm i && pnpm cap add ios",
     "build:web": "tsc && vite build",
     "build:ios": "pnpm build:web && cap sync && cap open ios",
     "preview": "vite preview"
